@@ -11,7 +11,7 @@ jobs:
   backport:
     name: Backport
     runs-on: ubuntu-latest
-    if: contains(github.event.label.name, 'backport')
+    if: contains(github.event.label.name, 'backport-')
     steps:
       - name: Backport Action
         uses: sqren/backport-github-action@v8.9.7
@@ -19,3 +19,4 @@ jobs:
           github_token: ${{ secrets.SCIMIA_BOT_GITHUB_TOKEN }}
           auto_backport_label_prefix: backport-
           add_original_reviewers: true
+
