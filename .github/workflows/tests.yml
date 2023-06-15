@@ -15,7 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run Tests
+      - name: Run Flaky Tests
+        id: flaky
+        continue-on-error: true
         env:
           VERBOSE: ${{ runner.debug == '1' && '1' || '' }}
         run: ./tests.sh flaky
+
+      - name: Run Tests
+        if: steps.flaky.outcome == 'failure'
+        env:
+          VERBOSE: ${{ runner.debug == '1' && '1' || '' }}
+        run: ./tests.sh
