@@ -4,7 +4,7 @@ source = {
    url = "git+https://github.com/Scimia/scimia.git"
 }
 description = {
-   homepage = "https://github.com/Scimia/scimia",
+   homepage = "https://scimiahq.com",
    license = "Apache 2.0"
 }
 dependencies = {
