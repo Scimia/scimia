@@ -3,11 +3,15 @@ name: Backport
 
 on:
   workflow_dispatch: {}
+  pull_request_target:
+    types:
+      - labeled
 
 jobs:
   backport:
     name: Backport
     runs-on: ubuntu-latest
+    if: contains(github.event.label.name, 'backport')
     steps:
       - uses: tibdex/backport@2e217641d82d02ba0603f46b1aeedefb258890ac # v2.0.3
         with:
