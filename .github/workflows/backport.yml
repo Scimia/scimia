@@ -3,15 +3,21 @@ name: Backport
 
 on:
   workflow_dispatch: {}
-  pull_request:
+  pull_request_target:
     types:
       - labeled
+      - closed
 
 jobs:
   backport:
     name: Backport
     runs-on: ubuntu-latest
-    if: contains(github.event.label.name, 'backport-')
+    if: >
+      github.event.pull_request.merged == true
+      && contains(github.event.label.name, 'backport-')
+      && (
+        github.event.action == 'labeled' || github.event.action == 'closed'
+      )
     steps:
       - name: Backport Action
         uses: sqren/backport-github-action@v8.9.7
@@ -20,3 +26,10 @@ jobs:
           auto_backport_label_prefix: backport-
           add_original_reviewers: true
 
+      - name: Info log
+        if: ${{ success() }}
+        run: cat ~/.backport/backport.info.log
+
+      - name: Debug log
+        if: ${{ failure() }}
+        run: cat ~/.backport/backport.debug.log
