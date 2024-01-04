@@ -1,4 +1,3 @@
----
 name: Release
 
 on:
@@ -8,6 +7,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ fromJSON(vars.GHA_DEFAULT_TIMEOUT) }}
     steps:
       - name: Step One
         run: uuidgen
